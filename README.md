@@ -30,27 +30,26 @@ from others.  Feel free to create issues or mail me in game (Blacksmoke16).
 When stopping and returning again later you will want to run <tt>rake pos:POSs</tt> to update the informaiton. If needed I can include instructions on how to use cron tasks to keep things updated if people will use that method.
 
 ### Features:
-  *  View outstanding couriers, volume, reward and collateral
-  *  View total couriers completed, volume moved, reward received and collateral over time.
-  *  View volume/reward going to/from jita from seperated by system.
-  *  Highlights couriers that are low reward based on inputted parameters such as fees for collateral, min volume etc.
-  *  Highlights couriers that end/start system is not on your list of serviced systems.
+  *  View POSs, fuel usage/stats, silo contents/type etc etc
+  *  View fuel usage per day/week/month for all pos
+  *  Hide POS to remvoe them from list and fuel usage numbers
+  *  Add labels to pos to quickly filter between say reaction vs mining pos
   
 ### Legend:
-  * Reward is red:  Reward is lower than it should be with your inputted settings
-  * Reward is orange:  Courier is going to a system not in your systems list.
-  * Comment column value is the tip for that courier.(ie. Money over what the exact value should be).  Will say 'Over
-   Volume' if that courier's volume is over your inputted setting.
-   
-### Settings:
-* rate: Isk per m3.  
-* Collateral Fee:  Extra fee if they have collateral.  
-* Max Volume:  Max volume per courier.  
-* Min Volume:  Couriers below this volume will be have the Minimum fee added on.  
-* Min Fee:  Extra fee if courier volume is below the min volume.  
-* Systems:  List of systems you service (comma separated)  
-    
-    
+  * State is green:  POS is online and opperational
+  * State is orange:  POS is anchored
+  * State is red:  POS is reinforced or unanchored
+  * State is yellow:  POS is onlining
+  * State is blinking pink:  Has a siphon or amounts in silo are not divisible by 100 with no remainder.
+  
+  * Silo bar is red:  Raw moon goo
+  * Silo bar is Blue:  Intermediate goo
+  * Silo bar is purple: Advanced goo
+  
+  * Fuel bar is green: More than a week left
+  * Fuel bar is yellow: Less than a week left
+  * Fuel bar is red:  Less than 3 days left
+     
 ### Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#1684
