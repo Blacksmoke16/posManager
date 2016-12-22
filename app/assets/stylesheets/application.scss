@@ -1,0 +1,123 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require crest.scss
+ *= require angular-material-data-table
+ */
+@import 'compass';
+
+//colors
+$text-primary: #c8c8c8;
+$text-primary-table: #323232;
+
+.layout-column > {
+  .flex-5 {
+    flex: 5;
+  }
+  .flex-10 {
+    flex: 10;
+  }
+  .flex-15 {
+    flex: 15;
+  }
+  .flex-20 {
+    flex: 20;
+  }
+  .flex-25 {
+    flex: 25;
+  }
+  .flex-30 {
+    flex: 30;
+  }
+  .flex-35 {
+    flex: 35;
+  }
+  .flex-40 {
+    flex: 40;
+  }
+  .flex-45 {
+    flex: 45;
+  }
+  .flex-50 {
+    flex: 50;
+  }
+  .flex-55 {
+    flex: 55;
+  }
+  .flex-60 {
+    flex: 60;
+  }
+  .flex-65 {
+    flex: 65;
+  }
+  .flex-70 {
+    flex: 70;
+  }
+  .flex-75 {
+    flex: 75;
+  }
+  .flex-80 {
+    flex: 80;
+  }
+  .flex-85 {
+    flex: 85;
+  }
+  .flex-90 {
+    flex: 90;
+  }
+  .flex-95 {
+    flex: 95;
+  }
+}
+
+[layout-fill] {
+  position: absolute !important;
+}
+
+* {
+  flex-shrink: 0 !important;
+  color: $text-primary !important;
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.width {
+  width: 100% !important;
+}
+
+p {
+  white-space: normal !important;
+}
+
+md-list {
+  padding-top: 0;
+}
+
+md-toolbar {
+  background-color: #4e737d !important;
+}
+
+.footer {
+  background-color: #4e737d !important;
+  height: 25px !important;
+  font-size: medium;
+}
+
+md-list-item a {
+  margin: 0 !important;
+}
+
+table.md-table.md-row-select tbody.md-body > tr.md-row {
+  @include transition(none);
+}
+

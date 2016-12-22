@@ -1,0 +1,97 @@
+var app = angular.module('posManager', ['ui.router', 'ngAria', 'ngAnimate', 'ngMaterial', 'templates', 'md.data.table', 'angularMoment', 'ngSanitize']);
+
+app.config(['$httpProvider', '$stateProvider', '$locationProvider', '$mdThemingProvider', '$mdIconProvider', '$urlRouterProvider', function ($httpProvider, $stateProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, $urlRouterProvider) {
+
+  // $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+
+  $locationProvider.html5Mode({
+    enabled: true
+  });
+
+  var customPrimary = {
+    '50': '#90b1ba',
+    '100': '#81a6b0',
+    '200': '#719ba6',
+    '300': '#62909c',
+    '400': '#58818d',
+    '500': '#4e737d',
+    '600': '#44656d',
+    '700': '#3a565e',
+    '800': '#31484e',
+    '900': '#27393e',
+    'A100': '#a0bcc4',
+    'A200': '#b0c7ce',
+    'A400': '#c0d2d7',
+    'A700': '#1d2b2e'
+  };
+  $mdThemingProvider.definePalette('customPrimary', customPrimary);
+
+  var customAccent = {
+    '50': '#23ffd4',
+    '100': '#0affcf',
+    '200': '#00efc0',
+    '300': '#00d6ac',
+    '400': '#00bc97',
+    '500': '#00a383',
+    '600': '#00896f',
+    '700': '#00705a',
+    '800': '#005646',
+    '900': '#003d31',
+    'A100': '#3dffd9',
+    'A200': '#56ffde',
+    'A400': '#70ffe3',
+    'A700': '#00231d'
+  };
+  $mdThemingProvider.definePalette('customAccent', customAccent);
+
+  var customWarn = {
+    '50': '#ffb280',
+    '100': '#ffa266',
+    '200': '#ff934d',
+    '300': '#ff8333',
+    '400': '#ff741a',
+    '500': '#ff6400',
+    '600': '#e65a00',
+    '700': '#cc5000',
+    '800': '#b34600',
+    '900': '#993c00',
+    'A100': '#ffc199',
+    'A200': '#ffd1b3',
+    'A400': '#ffe0cc',
+    'A700': '#803200'
+  };
+  $mdThemingProvider.definePalette('customWarn', customWarn);
+
+  var customBackground = {
+    '50': '#404040',
+    '100': '#333333',
+    '200': '#262626',
+    '300': '#1a1a1a',
+    '400': '#0d0d0d',
+    '500': '#000',
+    '600': '#000000',
+    '700': '#000000',
+    '800': '#000000',
+    '900': '#000000',
+    'A100': '#4d4d4d',
+    'A200': '#595959',
+    'A400': '#666666',
+    'A700': '#000000'
+  };
+  $mdThemingProvider.definePalette('customBackground', customBackground);
+
+  $mdThemingProvider.theme('default')
+      .primaryPalette('customPrimary')
+      .accentPalette('customAccent')
+      .warnPalette('customWarn')
+      .backgroundPalette('customBackground');
+
+  $mdIconProvider.defaultIconSet('<%= asset_path('icons/material-icons.svg') %>');
+
+  // default fallback route
+  // Workaround for infinite digest loop error - see https://github.com/Narzerus/angular-permission/issues/65
+  $urlRouterProvider.otherwise(function ($injector) {
+    var $state = $injector.get("$state");
+    $state.go('root.pos');
+  });
+}])

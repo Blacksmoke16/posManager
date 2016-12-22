@@ -1,0 +1,180 @@
+<div flex layout="column" layout-margin>
+
+	<div layout="row" layout-align="center center" class="rounded-card" md-whiteframe="1">
+		<md-input-container>
+			<label>Filter</label>
+			<md-select ng-disabled="sb.tags.length == 0" ng-model="search">
+				<md-option ng-repeat="note in sb.tags">{{note}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-button class="md-raised" ng-click="search = ''">Clear</md-button>
+		<div flex layout layout-align="end center" layout-padding>
+			<div ng-if="sb.range" ng-repeat="(k,v) in sb.fuelInvisible()" ng-if="k != 'null'">{{v * sb.time | number}}
+				{{k}}s
+			</div>
+			<div ng-if="!sb.range" ng-repeat="(k,v) in sb.regionFuels" ng-if="k != 'null'">{{v * sb.time | number}}
+				{{k}}s
+			</div>
+			<div layout layout-align="start center">
+				<p layout-padding style="margin: 0">Per</p>
+				<md-input-container style="margin: 0">
+					<md-select ng-model="sb.time" aria-label="time selector">
+						<md-option value="24">Day</md-option>
+						<md-option value="168">Week</md-option>
+						<md-option value="672">Month</md-option>
+					</md-select>
+				</md-input-container>
+				<md-radio-group ng-model="sb.range">
+					<md-radio-button ng-value="true" aria-label="total">
+						Total
+					</md-radio-button>
+					<md-radio-button ng-value="false" aria-label="region">
+						Region
+					</md-radio-button>
+				</md-radio-group>
+			</div>
+		</div>
+	</div>
+
+	<div layout="column" flex class="rounded-card" md-whiteframe="1">
+		<md-tabs flex>
+			<md-tab ng-click="sb.regionFuel(k)" ng-repeat="(k,v) in sb.data" label="{{k}}" ng-if="sb.regionVisible(k)">
+				<md-table-container>
+					<table md-table>
+						<thead md-head>
+						<tr md-row>
+							<th md-column><span></span></th>
+							<th colspan="3" md-column><span>POS</span></th>
+							<th md-column><span>Fuel Blocks</span></th>
+							<th md-column><span>Stront</span></th>
+							<th md-column><span>State</span></th>
+							<th md-column><span>Silos</span></th>
+							<th md-column><span>Visibility</span></th>
+						</tr>
+						</thead>
+						<tbody md-body>
+						<tr md-row
+						    ng-repeat="pos in v | orderBy:['-siphon','constellationName','locationName'] | filter: search"
+						    ng-if="pos.visible">
+							<td md-cell><img ng-src="https://image.eveonline.com/Type/{{pos.typeID}}_64.png"
+							                 title="{{pos.typeName}}"/></td>
+							<td style="font-size: large;" colspan="3" md-cell>{{pos.locationName}} -
+								{{pos.constellationName}}
+								<div style="width: 100%;" ng-if="pos.note[0] != ''">
+									<md-chips md-on-add="sb.update(pos)" md-on-remove="sb.update(pos)"
+									          ng-model="pos.note"></md-chips>
+								</div>
+							</td>
+							<td
+									md-cell ng-class="sb.getPosClass(pos.fuelAmount / pos.fuelConsumption)">
+								{{pos.fuelAmount | number}} - {{((pos.fuelAmount * 5 * 100) / pos.posCapacity) |
+								number:2}}%
+
+								<md-icon ng-click="pos.fuelToggle = !pos.fuelToggle" md-svg-icon="add"
+								         style="fill:white"></md-icon>
+
+								<span style="font-size: xx-small">Click to add fuel blocks</span>
+
+								<br> {{pos.fuelAmount / pos.fuelConsumption | timeRemaining}}
+								<md-progress-linear
+										class="md-primary"
+										md-mode="determinate"
+										value="{{((pos.fuelAmount * 5 * 100) / pos.posCapacity)}}">
+								</md-progress-linear>
+
+								<form name="fuelBlocks">
+									<md-input-container ng-if="pos.fuelToggle">
+										<label>Edit blocks</label>
+										<input name="blocks" type="number" step="{{pos.fuelConsumption}}"
+										       ng-init="blocks = pos.fuelAmount; base = pos.fuelAmount"
+										       ng-model="blocks" min="{{base}}" max="{{pos.posCapacity / 5}}"
+										       ng-change="pos.fuelAmount = fuelAmount + blocks"/>
+										<div ng-messages="fuelBlocks.blocks.$error" md-auto-hide="false">
+											<div ng-message="max">
+												POS cannot have anymore blocks!
+											</div>
+											<div ng-message="min">
+												Can't change the pos to have less fuel than it already does.
+											</div>
+										</div>
+									</md-input-container>
+								</form>
+							</td>
+							<td md-cell>{{pos.strontAmount | number}} <br> {{pos.strontAmount / pos.strontConsumption |
+								timeRemaining}}
+							</td>
+							<td md-cell ng-class="sb.getStateClass(pos)">{{pos.state}}</td>
+							<td md-cell>
+								<ul>
+									<li ng-repeat="silo in pos.silos | orderBy:'-gooAmount'"
+									    ng-class="sb.getSiloClass(silo.gooGroupID)">
+										{{silo.siloName}} - {{silo.gooName}} - {{(silo.gooAmount * silo.gooVolume * 100)
+										/
+										pos.siloCapacity}}% ({{silo.gooAmount/1000}}K) <br>
+										<md-progress-linear
+												md-mode="determinate"
+												value="{{((silo.gooAmount * silo.gooVolume * 100) / pos.siloCapacity)}}">
+										</md-progress-linear>
+									</li>
+								</ul>
+							</td>
+							<td md-cell>
+								<md-icon ng-click="sb.update(pos,false)" md-svg-icon="visibility_off"
+								         style="fill:red"></md-icon>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</md-tab>
+			<md-tab label="Hidden" flex ng-if="sb.posInvisible().length > 0">
+				<md-table-container>
+					<table md-table>
+						<thead md-head>
+						<tr md-row>
+							<th md-column><span>POS Type</span></th>
+							<th md-column><span>Location</span></th>
+							<th md-column><span>Region</span></th>
+							<th md-column><span>Constellation</span></th>
+							<th md-column><span>Fuel Blocks</span></th>
+							<th md-column><span>Stront</span></th>
+							<th md-column><span>State</span></th>
+							<th md-column><span>Silos</span></th>
+							<th md-column><span>Siphon</span></th>
+							<th md-column><span>Visibility</span></th>
+						</tr>
+						</thead>
+						<tbody md-body>
+						<tr md-row ng-repeat="pos in sb.posInvisible() | orderBy:['constellationName','locationName']">
+							<td md-cell>{{pos.typeName}}</td>
+							<td md-cell>{{pos.locationName}}</td>
+							<td md-cell>{{pos.regionName}}</td>
+							<td md-cell>{{pos.constellationName}}</td>
+							<td md-cell>{{pos.fuelAmount | number}} <br> {{pos.fuelAmount / pos.fuelConsumption |
+								timeRemaining}}
+							</td>
+							<td md-cell>{{pos.strontAmount | number}} <br> {{pos.strontAmount / 400 | timeRemaining}}
+							</td>
+							<td md-cell>{{pos.state}}</td>
+							<td md-cell>
+								<ul>
+									<li ng-repeat="silo in pos.silos | orderBy:'-gooAmount'">{{silo.siloName}} -
+										{{silo.gooName}} -
+										{{(silo.gooAmount * silo.gooVolume * 100) / pos.siloCapacity}}%
+									</li>
+								</ul>
+							</td>
+							<td md-cell>{{pos.siphon}}</td>
+							<td md-cell>
+								<md-icon ng-click="sb.update(pos,true)" md-svg-icon="visibility"
+								         style="fill:red"></md-icon>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</md-table-container>
+			</md-tab>
+		</md-tabs>
+	</div>
+
+</div>
