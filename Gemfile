@@ -8,16 +8,15 @@ gem 'sass', '3.4.19'
 gem 'sass-rails'
 gem 'compass-rails'
 gem 'mysql2', '~> 0.3.18'
-gem 'responders'
 gem 'coffee-rails'
 gem 'angular-rails-templates', '>= 1.0'
-gem 'httparty'
-gem 'composite_primary_keys'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+gem 'httparty'
 gem 'nokogiri'
 gem 'bootstrap-sass'
-gem 'whenever', require: false
+gem 'whenever'
 gem 'activerecord-import'
+gem 'responders'
 
 source 'http://rails-assets.org' do
 	 gem 'rails-assets-lodash'
@@ -31,19 +30,6 @@ source 'http://rails-assets.org' do
 	 gem 'rails-assets-angular-sanitize'
 end
 
-group :development do
-	 gem 'meta_request'
-	 gem 'rails-erd'
-	 gem 'brakeman'
-end
-
-group :development, :test do
-	 gem 'rubocop'
-	 gem 'rails-assets-angular-mocks'
-	 gem 'fabrication'
-end
-
 group :production do
 	 gem 'uglifier', '>= 1.3.0'
-	 # gem 'therubyracer'
 end
