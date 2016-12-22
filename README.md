@@ -1,6 +1,6 @@
 # README #
 
-With the end of POS nearing I decided to release a public version of my POS manager tool.  This program is intended to be ran on localhost.  To make things simpler for me and the users I have removed SSO login so only a few manual database inserts/edits are required.  It also also assumed that the users have some technical experience.
+With the end of POS nearing I decided to release a public version of my POS manager tool.  This program is intended to be ran on localhost.  To make things simpler for me and the users I have removed SSO login so only a few manual database inserts/edits are required.  It is also assumed that the users have some technical experience.
 
 Screenshots:  http://imgur.com/a/drJOF
 
@@ -34,6 +34,7 @@ When stopping and returning again later you will want to run <tt>rake pos:POSs</
   *  View fuel usage per day/week/month for all pos
   *  Hide POS to remvoe them from list and fuel usage numbers
   *  Add labels to pos to quickly filter between say reaction vs mining pos
+  *  Tell user that a pos might have a siphon
   
 ### Legend:
   * State is green:  POS is online and opperational
