@@ -21,10 +21,11 @@ from others.  Feel free to create issues or mail me in game (Blacksmoke16).
    5. Once bundler is installed run <tt>bundle install</tt> to install the rest of the gems
    6. Run <tt>rake db:setup</tt> to initialize the database
    7. Import EVE SDE tables in
-   8. In the users table, add the character you will using.  (Because it is meant to be usedfor localhost it will only use the first user in the table.  The table is used to store some settings so that when you stop and return they remain intact.
-   9. In the corps table, add the corp information and api.  Api requires:  assetList, locations, corporationSheet, starbaseList and starbaseDetails.
-   10. Run <tt>rake pos:POSs</tt> to load in the data.
-   11. Run <tt>rails s</tt> to host the server on localhost:3000
+   8.  Run <tt>rake db:migrate</tt> to create the non sde tables.
+   9. In the users table, add the character you will using.  (Because it is meant to be usedfor localhost it will only use the first user in the table.  The table is used to store some settings so that when you stop and return they remain intact.
+   10. In the corps table, add the corp information and api.  Api requires:  assetList, locations, corporationSheet, starbaseList and starbaseDetails.
+   11. Run <tt>rake pos:POSs</tt> to load in the data.
+   12. Run <tt>rails s</tt> to host the server on localhost:3000
 
 
 When stopping and returning again later you will want to run <tt>rake pos:POSs</tt> to update the informaiton. If needed I can include instructions on how to use cron tasks to keep things updated if people will use that method.
